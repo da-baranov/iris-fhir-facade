@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "adhds:ADHDS",
+			"uri": "isfs://adhds:adhds/"
+		}
+	],
+	"settings": {}
+}

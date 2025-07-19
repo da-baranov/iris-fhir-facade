@@ -1,0 +1,10 @@
+{
+    "intersystems.servers": {
+        
+    },
+    "objectscript.conn": {
+        "server": "adhds",
+        "ns": "ADHDS",
+        "active": true
+    }
+}

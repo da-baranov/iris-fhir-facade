@@ -1,0 +1,11 @@
+services:
+  irishealth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iris
+    ports:
+      - "${WEB_UI_PORT}:52773"   
+      - "${IRIS_SERVER_PORT}:1972"
+    env_file:
+      - .env

@@ -1,0 +1,2 @@
+GET http://localhost:52773/csp/healthshare/adhds/fhir/r4/Patient/1 HTTP/1.1
+Accept: application/json,application/fhir+json
