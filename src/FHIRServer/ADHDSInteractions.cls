@@ -63,9 +63,10 @@ Method Search(pResourceType As %String, pCompartment As %String, pCompartmentId 
         While (rs.%Next())
         {
             Set patientEntity = ##class(DemoData.Patient).%OpenId(rs.%Get("ID"))
+            #Dim patient as HS.FHIR.DTL.vR4.Model.Resource.Patient
             $$$ThrowOnError(##class(DemoData.PatientDTL).Transform(patientEntity, .patient))
             Set patientJson = ##class(Util).ToDynamicObject(patient)
-            Do result.AddRow(patientEntity.%Id(), "Patient", patientEntity.%Id(), 1, "search", , patientJson)
+            Do result.AddRow(patientEntity.%Id(), "Patient", patientEntity.%Id(), 1, "match", , patientJson, "http://", "123")
         }
 
         // Return

@@ -11,6 +11,7 @@ ClassMethod Transform(source As DemoData.Patient, ByRef target As HS.FHIR.DTL.vR
         Set identifier.value = source.Identifier
         Do patient.identifier.Insert(identifier)
         Set patient.birthDate = ##class(%Library.TimeStamp).LogicalToXSD(source.BirthDate)
+        Set patient.active = 1
         If (source.Gender = "M")
         {
             Set patient.gender = "male"
