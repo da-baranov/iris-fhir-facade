@@ -1,3 +1,4 @@
-Class FHIRServer.ADHDSBundleValidator Extends HS.FHIRServer.Util.BundleValidator 
+Class FHIRServer.ADHDSBundleValidator Extends HS.FHIRServer.Util.BundleValidator
 {
+
 }

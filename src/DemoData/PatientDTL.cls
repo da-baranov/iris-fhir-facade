@@ -6,21 +6,24 @@ ClassMethod Transform(source As DemoData.Patient, ByRef target As HS.FHIR.DTL.vR
 {
     Try
     {
-        Set target = ##class(HS.FHIR.DTL.vR4.Model.Resource.Patient).%New()
+        Set patient = ##class(HS.FHIR.DTL.vR4.Model.Resource.Patient).%New()
         Set identifier = ##class(HS.FHIR.DTL.vR4.Model.Datatype.Identifier).%New()
         Set identifier.value = source.Identifier
-        Set target.birthDate = source.BirthDate
+        Do patient.identifier.Insert(identifier)
+        Set patient.birthDate = ##class(%Library.TimeStamp).LogicalToXSD(source.BirthDate)
         If (source.Gender = "M")
         {
-            Set target.gender = "male"
+            Set patient.gender = "male"
         }
         Else
         {
-            Set target.gender = "female"
+            Set patient.gender = "female"
         }
         Set name = ##class(HS.FHIR.DTL.vR4.Model.Datatype.HumanName).%New()
         Set name.family = source.Family
         Do name.given.Insert(source.Given)
+        Do patient.name.Insert(name)
+        Set target = patient
         Return $$$OK
     }
     Catch (ex)

@@ -16,11 +16,15 @@ ROUTINE iris
     // INSTALL FOUNDATION
     Do ##class(App.Installer.Fhir).InstallFoundation(namespace)
 
-    // LOAD AND COMPILE FHIR FACADE SOURCES
+    // ONCE THE FOUNDATION IS READY, LOAD AND COMPILE FHIR FACADE SOURCES
     ZN namespace
     Do $system.OBJ.LoadDir("/opt/irisapp/src", "ck", , 1)
-    Do $SYSTEM.OBJ.CompilePackage("FHIRServer")
-    Do ##class(App.Installer.Fhir).InstallFHIRServer(namespace, fhirEndpoint, 1)
+    Do ##class(App.Installer.Fhir).InstallFHIRServer(namespace, fhirEndpoint, 7) // 7 = 1 || 2 || 4
+
+    // SEED
+    ZN namespace
+    Do $system.OBJ.CompilePackage("DemoData")
+    Do ##class(DemoData.Seed).SeedPatients()
 
     Halt
     

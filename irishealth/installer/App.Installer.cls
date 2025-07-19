@@ -34,6 +34,8 @@ ClassMethod SetupSuperUser()
         Set user.NameSpace = namespace
         Do user.%Save()
     }
+
+    Return $$$OK
 }
 
 ClassMethod SetupNamespace(nsName As %String) As %Status

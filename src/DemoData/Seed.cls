@@ -70,6 +70,16 @@ ClassMethod SeedPatients()
         Set patient = ..GetRandomPerson()
         $$$ThrowOnError(patient.%Save())
     }
+    Write "Seeding OK", !
+}
+
+ClassMethod Temp()
+{
+    Set strategy = ##class(HS.FHIRServer.API.InteractionsStrategy).GetStrategyForEndpoint("/csp/healthshare/adhds/fhir/r4")
+    Set config = strategy.GetServiceConfigData()
+    Set config.DebugMode = 7
+    Write config.DebugMode, !
+    Do strategy.SaveServiceConfigData(config)
 }
 
 }
