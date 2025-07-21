@@ -1,30 +1,20 @@
-ROUTINE iris
-    // Load and compile installer files
-    ZN "%SYS"
-    Set sc = $system.OBJ.Load("/opt/irisapp/installer/App.Installer.cls", "ck", , 1)
-    Set sc = $system.OBJ.Load("/opt/irisapp/installer/App.Installer.Fhir.cls", "ck", , 1)
+// Load and compile installer files
+ZN "%SYS"
+Set sc = $system.OBJ.Load("/opt/irisapp/installer/App.Installer.cls", "ck", , 1)
+Set sc = $system.OBJ.Load("/opt/irisapp/installer/App.Installer.Fhir.cls", "ck", , 1)
 
-    // User creation
-    Set sc = ##class(App.Installer).SetupSuperUser()
-    do ##class(Security.Users).UnExpireUserPasswords("*")
+// User creation
+do ##class(Security.Users).UnExpireUserPasswords("*")
 
-    // Namespace creation
-    Set namespace    = $System.Util.GetEnviron("IRIS_NAMESPACE")
-    Set fhirEndpoint = $System.Util.GetEnviron("FHIR_ENDPOINT")
-    Set sc = ##class(App.Installer).SetupNamespace(namespace)
+// Namespace creation
+Set namespace    = $System.Util.GetEnviron("IRIS_NAMESPACE")
 
-    // INSTALL FOUNDATION
-    Do ##class(App.Installer.Fhir).InstallFoundation(namespace)
+// INSTALL FOUNDATION
+Do ##class(App.Installer.Fhir).InstallFoundation(namespace)
 
-    // ONCE THE FOUNDATION IS READY, LOAD AND COMPILE FHIR FACADE SOURCES
-    ZN namespace
-    Do $system.OBJ.LoadDir("/opt/irisapp/src", "ck", , 1)
-    Do ##class(App.Installer.Fhir).InstallFHIRServer(namespace, fhirEndpoint, 7) // 7 = 1 || 2 || 4
+// LOAD AND COMPILE src in the ADHDS namespace
+ZN namespace
+Set sc = $system.OBJ.LoadDir("/opt/irisapp/src", "ck", , 1)
 
-    // SEED
-    ZN namespace
-    Do $system.OBJ.CompilePackage("DemoData")
-    Do ##class(DemoData.Seed).SeedPatients()
-
-    Halt
+Halt
     
